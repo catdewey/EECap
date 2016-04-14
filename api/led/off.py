@@ -7,7 +7,7 @@ import os
 import urlparse
 #import wiringx
 
-address = 0x08
+address = 0x0F
 
 filepath = os.path.join('/tmp', 'BusInUse')
 
