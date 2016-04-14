@@ -5,7 +5,7 @@ import sys
 import time
 import os
 import urlparse
-#import wiringx
+import smbus
 
 address = 0x0B
 
@@ -29,9 +29,12 @@ while (True):
 
 
 #set motorSpeed  GPIO.input(address, ledNumber,0)
+bus = smbus.SMBus(2) #port i2c2
+bus.write_byte(address, motorSpeed)
+
+
 os.remove('/tmp/BusInUse')
 
 #null
 print ""
-
 

@@ -5,11 +5,12 @@ import sys
 import time
 import os
 import urlparse
-#import wiringx
+import smbus
 
 address = 0x0B
 
 filepath = os.path.join('/tmp', 'BusInUse')
+
 
 while (True):
     try:
@@ -21,11 +22,12 @@ while (True):
 
 
 #get motorSpeed  GPIO.input(address, ledNumber,0)
+bus = smbus.SMBus(2) #port i2c2
+motorSpeed = bus.read_byte(address)
+
 os.remove('/tmp/BusInUse')
 
 #change pinNumber to pinState once we can get that.
-print "<h1>This is the speed of the right motor: %s</h1>" % motorSpeed
-
-
+print "%s" % motorSpeed
 
 

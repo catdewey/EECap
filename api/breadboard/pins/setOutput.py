@@ -5,7 +5,7 @@ import sys
 import time
 import os
 import urlparse
-#import wiringx
+import smbus
 
 address = 0x08
 
@@ -17,8 +17,6 @@ arguments = cgi.FieldStorage()
 for i in arguments.keys():
     pinNumber = arguments[i].value
 
-
-
 while (True):
     try:
         file = open(filepath)
@@ -29,7 +27,11 @@ while (True):
 
 
 #set pin to 0  GPIO.input(address, ledNumber,0)
+bus = smbus.SMBus(2) #port i2c2
+bus.write_byte_data(address, pinNumber, 0)
+
+
 os.remove('/tmp/BusInUse')
 
-#change pinNumber to pinState once we can get that.
-print "<h1>This is the state of the breadboard pin you are inquiring about: %s</h1>" % pinNumber
+#returns nothing
+print ""

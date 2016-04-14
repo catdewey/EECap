@@ -5,7 +5,7 @@ import sys
 import time
 import os
 import urlparse
-#import wiringx
+import smbus
 
 address = 0x07
 ledNumber = sys.argv[1]
@@ -22,12 +22,13 @@ while (True):
 
 
 
-#get x value  GPIO.input(address, ledNumber,0)
+#get x value
+bus = smbus.SMBus(2) #port i2c2
+xValue = bus.read_byte(address)
+
 os.remove('/tmp/BusInUse')
 
-print "Content-type: text/html\n\n"
 
 #output xValue .
-print "<h1>This is the x value: %s</h1>" % xValue
-
+print "%s" % xValue
 

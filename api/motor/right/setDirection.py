@@ -5,7 +5,7 @@ import sys
 import time
 import os
 import urlparse
-#import wiringx
+import smbus
 
 address = 0x0B
 
@@ -28,10 +28,11 @@ while (True):
     time.sleep(0.08)
 
 
-#get pin state  GPIO.input(address, ledNumber,0)
+#set motor direction
+bus = smbus.SMBus(2) #port i2c2
+bus.write_byte_data(address, motorDirection)
+
 os.remove('/tmp/BusInUse')
 
 #return null
 print ""
-
-

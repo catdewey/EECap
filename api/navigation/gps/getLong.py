@@ -5,13 +5,11 @@ import sys
 import time
 import os
 import urlparse
-#import wiringx
+import smbus
 
 address = 0x07
 
 filepath = os.path.join('/tmp', 'BusInUse')
-
-
 
 
 while (True):
@@ -23,10 +21,12 @@ while (True):
     time.sleep(0.08)
 
 
-#get longitude  GPIO.input(address, ledNumber,0)
+#get longitude value
+bus = smbus.SMBus(2) #port i2c2
+longitude = bus.read_byte(address)
 
 os.remove('/tmp/BusInUse')
 
-#return longitude
-print "Content-type: text/html\n\n"
-print "<h1>This is the Longitude: %s</h1>" % longitude
+
+#output longitude .
+print "%s" % longitude

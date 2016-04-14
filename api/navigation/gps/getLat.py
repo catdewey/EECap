@@ -5,7 +5,7 @@ import sys
 import time
 import os
 import urlparse
-#import wiringx
+import smbus
 
 address = 0x07
 
@@ -21,11 +21,12 @@ while (True):
     time.sleep(0.08)
 
 
-#get lat  GPIO.input(address, ledNumber,0)
+#get lat value
+bus = smbus.SMBus(2) #port i2c2
+lat = bus.read_byte(address)
 
 os.remove('/tmp/BusInUse')
 
-#return lat
-print "Content-type: text/html\n\n"
-print "<h1>This is the state of the breadboard pin you are inquiring about: %s</h1>" % lat
 
+#output lat .
+print "%s" % lat

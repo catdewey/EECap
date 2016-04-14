@@ -5,7 +5,7 @@ import sys
 import time
 import os
 import urlparse
-#import wiringx
+import smbus
 
 address = 0x0F
 
@@ -18,7 +18,6 @@ for i in arguments.keys():
     ledNumber = arguments[i].value
 
 
-
 while (True):
     try:
         file = open(filepath)
@@ -29,7 +28,9 @@ while (True):
 
 
 #get led state  GPIO.input(address, ledNumber,0)
+bus = smbus.SMBus(2) #port i2c2
+ledState = bus.read_byte(address, ledNumber)
 os.remove('/tmp/BusInUse')
 
-#change pinNumber to ledState once we can get that.
-print "<h1>This is the state of the breadboard pin you are inquiring about: %s</h1>" % ledNumber
+#prints ledState once we can get that.
+print "%s" % ledState

@@ -1,27 +1,36 @@
 #!/usr/bin/python
 import cgi
+import cgitb
 import sys
 import time
-import os.path
-#import wiringx
+import os
+import urlparse
+import smbus
 
-address = 0x0F
-ledNumber = sys.argv[1]
+address = 0x0A
+
 filepath = os.path.join('/tmp', 'BusInUse')
 
 while (True):
     try:
         file = open(filepath)
-        print "no exit"
     except IOError:
         open(filepath, 'w+')
         break
     time.sleep(0.08)
 
 
+#get voltage  GPIO.input(address, ledNumber,0)
+bus = smbus.SMBus(2) #port i2c2
+voltage = bus.read_byte(address)
 
-#setInputto0  GPIO.input(address, ledNumber,0)
 os.remove('/tmp/BusInUse')
+
+#return voltage
+print "%s" % voltage
+
+
+
 
 
 

@@ -5,7 +5,7 @@ import sys
 import time
 import os
 import urlparse
-#import wiringx
+import smbus
 
 address = 0x09
 
@@ -13,11 +13,9 @@ filepath = os.path.join('/tmp', 'BusInUse')
 
 print "Content-type: text/html\n\n"
 
-arguments = cgi.FieldStorage()
-for i in arguments.keys():
-    pinNumber = arguments[i].value
-
-
+#arguments = cgi.FieldStorage()
+#for i in arguments.keys():
+#    buttonNumber = arguments[i].value
 
 while (True):
     try:
@@ -29,6 +27,9 @@ while (True):
 
 
 #get button state  GPIO.input(address, ledNumber,0)
+bus = smbus.SMBus(2) #port i2c2
+buttonState = bus.read_byte(address)
+
 os.remove('/tmp/BusInUse')
 
-print "<h1>This is the state of the button on the UI module: %s</h1>" % buttonState
+print "%s" % buttonState

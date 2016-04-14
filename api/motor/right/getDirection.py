@@ -5,7 +5,7 @@ import sys
 import time
 import os
 import urlparse
-#import wiringx
+import smbus
 
 address = 0x0B
 
@@ -21,9 +21,13 @@ while (True):
 
 
 #get motorDirection  GPIO.input(address, ledNumber,0)
+bus = smbus.SMBus(2) #port i2c2
+motorDirection = bus.read_byte(address)
+
 os.remove('/tmp/BusInUse')
 
 #change pinNumber to pinState once we can get that.
-print "<h1>This is the direction of the right motor: %s</h1>" % motorDirection
+print "%s" % motorDirection
+
 
 

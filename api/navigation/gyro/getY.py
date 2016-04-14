@@ -22,13 +22,14 @@ while (True):
 
 
 
-#get y value  GPIO.input(address, ledNumber,0)
+#get y value
+bus = smbus.SMBus(2) #port i2c2
+yValue = bus.read_byte(address)
+
 os.remove('/tmp/BusInUse')
 
-print "Content-type: text/html\n\n"
 
-#output xValue .
-print "<h1>This is the y value: %s</h1>" % yValue
-
+#output yValue .
+print "%s" % yValue
 
 

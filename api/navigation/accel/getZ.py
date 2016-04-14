@@ -5,16 +5,15 @@ import sys
 import time
 import os
 import urlparse
-#import wiringx
+import smbus
 
 address = 0x07
-ledNumber = sys.argv[1]
+
 filepath = os.path.join('/tmp', 'BusInUse')
 
 while (True):
     try:
         file = open(filepath)
-    
     except IOError:
         open(filepath, 'w+')
         break
@@ -22,13 +21,15 @@ while (True):
 
 
 
-#get z value  GPIO.input(address, ledNumber,0)
+#get z value  
+bus = smbus.SMBus(2) #port i2c2
+zValue = bus.read_byte(address)
+
 os.remove('/tmp/BusInUse')
 
-print "Content-type: text/html\n\n"
 
-#output xValue .
-print "<h1>This is the z value: %s</h1>" % zValue
+#output zValue .
+print "%s" % zValue
 
 
 
