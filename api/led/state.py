@@ -1,15 +1,23 @@
 #!/usr/bin/python
-import urlparse
+import cgi
 import cgitb
 import sys
 import time
 import os
+import urlparse
 #import wiringx
-cgitb.enable()
 
 address = 0x0F
-ledNumber = sys.argv[1]
+
 filepath = os.path.join('/tmp', 'BusInUse')
+
+print "Content-type: text/html\n\n"
+
+arguments = cgi.FieldStorage()
+for i in arguments.keys():
+    ledNumber = arguments[i].value
+
+
 
 while (True):
     try:
@@ -20,14 +28,8 @@ while (True):
     time.sleep(0.08)
 
 
-
-#state =  GPIO.input(address, ledNumber,0)
-
-print "Content-type: text/html\n\n"
-print "<h1>hello, state is: %s </h1>" ledNumber #really state, but ledNumber fot testing 
-
-
-print os.environ['HOME']
-pring os.environ.get('KEY_THAT_might_exist')
-
+#get led state  GPIO.input(address, ledNumber,0)
 os.remove('/tmp/BusInUse')
+
+#change pinNumber to ledState once we can get that.
+print "<h1>This is the state of the breadboard pin you are inquiring about: %s</h1>" % ledNumber

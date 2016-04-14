@@ -1,28 +1,37 @@
 #!/usr/bin/python
 import cgi
+import cgitb
 import sys
 import time
-import os.path
+import os
+import urlparse
 #import wiringx
 
-address = 0x0F
-ledNumber = sys.argv[1]
+address = 0x0B
+
 filepath = os.path.join('/tmp', 'BusInUse')
+
+print "Content-type: text/html\n\n"
+
+arguments = cgi.FieldStorage()
+for i in arguments.keys():
+    motorSpeed = arguments[i].value
+
+
 
 while (True):
     try:
         file = open(filepath)
-        print "no exit"
     except IOError:
         open(filepath, 'w+')
         break
     time.sleep(0.08)
 
 
-
-#setInputto0  GPIO.input(address, ledNumber,0)
+#set motorSpeed  GPIO.input(address, ledNumber,0)
 os.remove('/tmp/BusInUse')
 
-
+#null
+print ""
 
 

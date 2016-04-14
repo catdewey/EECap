@@ -1,18 +1,20 @@
 #!/usr/bin/python
 import cgi
+import cgitb
 import sys
 import time
-import os.path
+import os
+import urlparse
 #import wiringx
 
-address = 0x0F
+address = 0x07
 ledNumber = sys.argv[1]
 filepath = os.path.join('/tmp', 'BusInUse')
 
 while (True):
     try:
         file = open(filepath)
-        print "no exit"
+    
     except IOError:
         open(filepath, 'w+')
         break
@@ -20,8 +22,15 @@ while (True):
 
 
 
-#setInputto0  GPIO.input(address, ledNumber,0)
+#get z value  GPIO.input(address, ledNumber,0)
 os.remove('/tmp/BusInUse')
+
+print "Content-type: text/html\n\n"
+
+#output xValue .
+print "<h1>This is the z value: %s</h1>" % zValue
+
+
 
 
 
